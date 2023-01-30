@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	
+	<http:listener-config name="training-sf-sapi-httpListenerConfig1">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    
+    <apikit:config name="training-sf-sapi-config" api="resource::f403adbc-62b2-4c57-83a7-fef8bdb6cb40:training-sf-sapi:1.0.0:raml:zip:training-sf-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	
+	
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="6083fe05-627a-4b1f-9e83-92d1fb7fc644" >
+		<salesforce:basic-connection username="${sfdc.user}" password="${sfdc.pass}" securityToken="${sfdc.security}" />
+	</salesforce:sfdc-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="bfda54cf-4e2f-4637-9796-785d330f7b10" file="config.yaml" />
+</mule>

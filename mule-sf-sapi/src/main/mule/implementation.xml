@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+		<flow name="SF-Implemetation-flow" doc:id="f5cf4719-8139-4f01-a94e-612bf0326e4a" >
+		<ee:transform doc:name="Transform Message" doc:id="42de2cf5-ba09-4398-bf9a-4594e58e58e0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	Name__c: payload.Name,
+	age__c: payload.age
+}]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:upsert objectType="likhita__c" doc:name="Upsert" doc:id="87fd5e3e-5f5a-4ccf-9099-db5b187027b7" externalIdFieldName="Id" config-ref="Salesforce_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="a2ac6b65-90d2-47e0-9c19-9f091404ff75" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
